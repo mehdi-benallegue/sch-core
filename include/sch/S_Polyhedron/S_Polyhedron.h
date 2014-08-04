@@ -18,7 +18,7 @@
 namespace sch
 {
   class S_Polyhedron :
-    public S_ObjectNonNormalized
+      public S_ObjectNonNormalized
   {
   public:
     SCH_API S_Polyhedron(void);

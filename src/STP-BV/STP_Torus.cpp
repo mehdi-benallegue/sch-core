@@ -3,7 +3,7 @@
 using namespace sch;
 
 s_STP_Circle::s_STP_Circle(const Vector3& normal, const Point3& center, Scalar radius):
-  m_normal(normal), m_center(center), m_radius(radius)
+    m_normal(normal), m_center(center), m_radius(radius)
 {
   m_normal.normalize();
 }
@@ -13,12 +13,12 @@ STP_Torus::STP_Torus()
 }
 
 STP_Torus::STP_Torus(const Vector3& cNormal, const Point3& cCenter, Scalar cRadius, Scalar sRadius):
-  m_circle(cNormal, cCenter, cRadius), m_sphereRadius(sRadius)
+    m_circle(cNormal, cCenter, cRadius), m_sphereRadius(sRadius)
 {
 }
 
 STP_Torus::STP_Torus(const STP_Torus& t):
-  STP_Feature(t),m_circle(t.m_circle.m_normal, t.m_circle.m_center, t.m_circle.m_radius), m_sphereRadius(t.m_sphereRadius)
+    STP_Feature(t),m_circle(t.m_circle.m_normal, t.m_circle.m_center, t.m_circle.m_radius), m_sphereRadius(t.m_sphereRadius)
 {
   m_VVR0 = t.m_VVR0;
   m_VVR1 = t.m_VVR1;
@@ -33,7 +33,7 @@ STP_Torus::~STP_Torus()
 
 void STP_Torus::setVVR(const STP_VVR* vvr)
 {
-  if(!vvr)
+  if (!vvr)
     return;
 
   m_VVR0 = vvr[0];
@@ -54,16 +54,16 @@ void STP_Torus::print() const
 bool STP_Torus::isHere(const Vector3& v) const
 {
   //outside first cone ?
-  if(!m_VVR0.isInside(v))
+  if (!m_VVR0.isInside(v))
   {
     //outside second cone ?
-    if(!m_VVR1.isInside(v))
+    if (!m_VVR1.isInside(v))
     {
       //outside first plane ?
-      if(!m_VVR2.isInside(v))
+      if (!m_VVR2.isInside(v))
       {
         //outside second plane ?
-        if(!m_VVR3.isInside(v))
+        if (!m_VVR3.isInside(v))
         {
           return true;
         }
@@ -92,45 +92,45 @@ bool STP_Torus::isHereFarthestNeighbour(const Vector3& v)
 
   m_nextBV[0] = m_nextBV[1] = m_nextBV[2] = m_nextBV[3] = -1;
 
-  if(m_VVR0.isInside(v))
+  if (m_VVR0.isInside(v))
   {
     res = false;
     tmp1 = m_VVR0.getDistance(v);
     m_nextBV[0] = m_VVR0.m_outerSTP;
   }
-  if(m_VVR1.isInside(v))
+  if (m_VVR1.isInside(v))
   {
     res = false;
     tmp2 = m_VVR1.getDistance(v);
     m_nextBV[1] = m_VVR1.m_outerSTP;
   }
-  if(m_VVR2.isInside(v))
+  if (m_VVR2.isInside(v))
   {
     res = false;
     tmp3 = m_VVR2.getDistance(v);
     m_nextBV[2] = m_VVR2.m_outerSTP;
   }
-  if(m_VVR3.isInside(v))
+  if (m_VVR3.isInside(v))
   {
     res = false;
     tmp4 = m_VVR3.getDistance(v);
     m_nextBV[3] = m_VVR3.m_outerSTP;
   }
 
-  if(m_nextBV[0] != -1)
+  if (m_nextBV[0] != -1)
   {
-    if(m_nextBV[1] != -1)
+    if (m_nextBV[1] != -1)
     {
-      if(m_nextBV[2] != -1)
+      if (m_nextBV[2] != -1)
       {
-        if(m_nextBV[3] != -1)
+        if (m_nextBV[3] != -1)
         {
           //compare the four values
-          if(tmp2 < tmp1)
+          if (tmp2 < tmp1)
           {
-            if(tmp3 < tmp2)
+            if (tmp3 < tmp2)
             {
-              if(tmp4 < tmp3)
+              if (tmp4 < tmp3)
               {
                 int tmp = m_nextBV[0];
                 m_nextBV[0] = m_nextBV[3];
@@ -139,7 +139,7 @@ bool STP_Torus::isHereFarthestNeighbour(const Vector3& v)
                 m_nextBV[1] = m_nextBV[2];
                 m_nextBV[2] = tmp;
               }
-              else if(tmp4 < tmp2)
+              else if (tmp4 < tmp2)
               {
                 int tmp = m_nextBV[0];
                 m_nextBV[0] = m_nextBV[2];
@@ -147,7 +147,7 @@ bool STP_Torus::isHereFarthestNeighbour(const Vector3& v)
                 m_nextBV[1] = m_nextBV[3];
                 m_nextBV[3] = tmp;
               }
-              else if(tmp4 < tmp1)
+              else if (tmp4 < tmp1)
               {
                 int tmp = m_nextBV[0];
                 m_nextBV[0] = m_nextBV[2];
@@ -161,22 +161,22 @@ bool STP_Torus::isHereFarthestNeighbour(const Vector3& v)
                 m_nextBV[2] = tmp;
               }
             }
-            else if(tmp3 < tmp1)
+            else if (tmp3 < tmp1)
             {
-              if(tmp4 < tmp2)
+              if (tmp4 < tmp2)
               {
                 int tmp = m_nextBV[0];
                 m_nextBV[0] = m_nextBV[3];
                 m_nextBV[3] = tmp;
               }
-              else if(tmp4 < tmp3)
+              else if (tmp4 < tmp3)
               {
                 int tmp = m_nextBV[0];
                 m_nextBV[0] = m_nextBV[1];
                 m_nextBV[1] = m_nextBV[3];
                 m_nextBV[3] = tmp;
               }
-              else if(tmp4 < tmp1)
+              else if (tmp4 < tmp1)
               {
                 int tmp = m_nextBV[0];
                 m_nextBV[0] = m_nextBV[1];
@@ -194,14 +194,14 @@ bool STP_Torus::isHereFarthestNeighbour(const Vector3& v)
             }
             else
             {
-              if(tmp4 < tmp2)
+              if (tmp4 < tmp2)
               {
                 int tmp = m_nextBV[0];
                 m_nextBV[0] = m_nextBV[3];
                 m_nextBV[3] = m_nextBV[2];
                 m_nextBV[2] = tmp;
               }
-              else if(tmp4 < tmp1)
+              else if (tmp4 < tmp1)
               {
                 int tmp = m_nextBV[0];
                 m_nextBV[0] = m_nextBV[1];
@@ -209,7 +209,7 @@ bool STP_Torus::isHereFarthestNeighbour(const Vector3& v)
                 m_nextBV[3] = m_nextBV[2];
                 m_nextBV[2] = tmp;
               }
-              else if(tmp4 < tmp3)
+              else if (tmp4 < tmp3)
               {
                 int tmp = m_nextBV[0];
                 m_nextBV[0] = m_nextBV[1];
@@ -226,11 +226,11 @@ bool STP_Torus::isHereFarthestNeighbour(const Vector3& v)
               }
             }
           }
-          else if(tmp3 < tmp2)
+          else if (tmp3 < tmp2)
           {
-            if(tmp3 < tmp1)
+            if (tmp3 < tmp1)
             {
-              if(tmp4 < tmp3)
+              if (tmp4 < tmp3)
               {
                 int tmp = m_nextBV[0];
                 m_nextBV[0] = m_nextBV[3];
@@ -238,7 +238,7 @@ bool STP_Torus::isHereFarthestNeighbour(const Vector3& v)
                 m_nextBV[1] = m_nextBV[2];
                 m_nextBV[2] = tmp;
               }
-              else if(tmp4 < tmp1)
+              else if (tmp4 < tmp1)
               {
                 int tmp = m_nextBV[0];
                 m_nextBV[0] = m_nextBV[2];
@@ -247,7 +247,7 @@ bool STP_Torus::isHereFarthestNeighbour(const Vector3& v)
                 m_nextBV[1] = m_nextBV[3];
                 m_nextBV[3] = tmp;
               }
-              else if(tmp4 < tmp2)
+              else if (tmp4 < tmp2)
               {
                 int tmp = m_nextBV[0];
                 m_nextBV[0] = m_nextBV[2];
@@ -265,20 +265,20 @@ bool STP_Torus::isHereFarthestNeighbour(const Vector3& v)
             }
             else
             {
-              if(tmp4 < tmp1)
+              if (tmp4 < tmp1)
               {
                 int tmp = m_nextBV[0];
                 m_nextBV[0] = m_nextBV[3];
                 m_nextBV[3] = m_nextBV[1];
                 m_nextBV[1] = tmp;
               }
-              else if(tmp4 < tmp3)
+              else if (tmp4 < tmp3)
               {
                 int tmp = m_nextBV[1];
                 m_nextBV[1] = m_nextBV[3];
                 m_nextBV[3] = tmp;
               }
-              else if(tmp4 < tmp2)
+              else if (tmp4 < tmp2)
               {
                 int tmp = m_nextBV[1];
                 m_nextBV[1] = m_nextBV[2];
@@ -293,11 +293,11 @@ bool STP_Torus::isHereFarthestNeighbour(const Vector3& v)
               }
             }
           }
-          else if(tmp4 < tmp3)
+          else if (tmp4 < tmp3)
           {
-            if(tmp4 < tmp2)
+            if (tmp4 < tmp2)
             {
-              if(tmp4 < tmp1)
+              if (tmp4 < tmp1)
               {
                 int tmp = m_nextBV[0];
                 m_nextBV[0] = m_nextBV[3];
@@ -325,15 +325,15 @@ bool STP_Torus::isHereFarthestNeighbour(const Vector3& v)
         {
           //compare the first three values
 
-          if(tmp2 < tmp1)
+          if (tmp2 < tmp1)
           {
             int tmp = m_nextBV[0];
-            if(tmp3 < tmp2)
+            if (tmp3 < tmp2)
             {
               m_nextBV[0] = m_nextBV[2];
               m_nextBV[2] = tmp;
             }
-            else if(tmp3 < tmp1)
+            else if (tmp3 < tmp1)
             {
               m_nextBV[0] = m_nextBV[1];
               m_nextBV[1] = m_nextBV[2];
@@ -345,9 +345,9 @@ bool STP_Torus::isHereFarthestNeighbour(const Vector3& v)
               m_nextBV[1] = tmp;
             }
           }
-          else if(tmp3 < tmp2)
+          else if (tmp3 < tmp2)
           {
-            if(tmp3 < tmp1)
+            if (tmp3 < tmp1)
             {
               int tmp = m_nextBV[0];
               m_nextBV[0] = m_nextBV[2];
@@ -364,17 +364,17 @@ bool STP_Torus::isHereFarthestNeighbour(const Vector3& v)
           m_nextBV[3] = -1;
         }
       }
-      else if(m_nextBV[3] != -1)
+      else if (m_nextBV[3] != -1)
       {
         //compare tmp1, tmp2 and tmp4
-        if(tmp2 < tmp1)
+        if (tmp2 < tmp1)
         {
-          if(tmp4 < tmp2)
+          if (tmp4 < tmp2)
           {
             m_nextBV[2] = m_nextBV[0];
             m_nextBV[0] = m_nextBV[3];
           }
-          else if(tmp4 < tmp1)
+          else if (tmp4 < tmp1)
           {
             m_nextBV[2] = m_nextBV[0];
             m_nextBV[0] = m_nextBV[1];
@@ -387,9 +387,9 @@ bool STP_Torus::isHereFarthestNeighbour(const Vector3& v)
             m_nextBV[2] = m_nextBV[3];
           }
         }
-        else if(tmp4 < tmp2)
+        else if (tmp4 < tmp2)
         {
-          if(tmp4 < tmp1)
+          if (tmp4 < tmp1)
           {
             m_nextBV[2] = m_nextBV[1];
             m_nextBV[1] = m_nextBV[0];
@@ -410,7 +410,7 @@ bool STP_Torus::isHereFarthestNeighbour(const Vector3& v)
       else
       {
         //compare tmp1 and tmp2
-        if(tmp2 < tmp1)
+        if (tmp2 < tmp1)
         {
           m_nextBV[2] = m_nextBV[0];
           m_nextBV[0] = m_nextBV[1];
@@ -418,20 +418,20 @@ bool STP_Torus::isHereFarthestNeighbour(const Vector3& v)
         }
       }
     }
-    else if(m_nextBV[2] != -1)
+    else if (m_nextBV[2] != -1)
     {
-      if(m_nextBV[3] != -1)
+      if (m_nextBV[3] != -1)
       {
         //compare tmp1, tmp3 and tmp4
-        if(tmp3 < tmp1)
+        if (tmp3 < tmp1)
         {
-          if(tmp4 < tmp3)
+          if (tmp4 < tmp3)
           {
             m_nextBV[1] = m_nextBV[2];
             m_nextBV[2] = m_nextBV[0];
             m_nextBV[0] = m_nextBV[3];
           }
-          else if(tmp4 < tmp1)
+          else if (tmp4 < tmp1)
           {
             int tmp = m_nextBV[0];
             m_nextBV[0] = m_nextBV[2];
@@ -445,9 +445,9 @@ bool STP_Torus::isHereFarthestNeighbour(const Vector3& v)
             m_nextBV[2] = m_nextBV[3];
           }
         }
-        else if(tmp4 < tmp3)
+        else if (tmp4 < tmp3)
         {
-          if(tmp4 < tmp1)
+          if (tmp4 < tmp1)
           {
             m_nextBV[1] = m_nextBV[0];
             m_nextBV[0] = m_nextBV[3];
@@ -467,7 +467,7 @@ bool STP_Torus::isHereFarthestNeighbour(const Vector3& v)
       else
       {
         //compare tmp1 and tmp3
-        if(tmp1 <= tmp3)
+        if (tmp1 <= tmp3)
         {
           m_nextBV[1] = m_nextBV[2];
         }
@@ -479,10 +479,10 @@ bool STP_Torus::isHereFarthestNeighbour(const Vector3& v)
         m_nextBV[2] = -1;
       }
     }
-    else if(m_nextBV[3] != -1)
+    else if (m_nextBV[3] != -1)
     {
       //compare tmp1 amd tmp4
-      if(tmp1 <= tmp4)
+      if (tmp1 <= tmp4)
       {
         m_nextBV[1] = m_nextBV[3];
       }
@@ -494,23 +494,23 @@ bool STP_Torus::isHereFarthestNeighbour(const Vector3& v)
       m_nextBV[3] = -1;
     }
   }
-  else if(m_nextBV[1] != -1)
+  else if (m_nextBV[1] != -1)
   {
-    if(m_nextBV[2] != -1)
+    if (m_nextBV[2] != -1)
     {
-      if(m_nextBV[3] != -1)
+      if (m_nextBV[3] != -1)
       {
         //compare tmp2, tmp3 and tmp4
-        if(tmp3 < tmp2)
+        if (tmp3 < tmp2)
         {
-          if(tmp4 < tmp3)
+          if (tmp4 < tmp3)
           {
             int tmp = m_nextBV[2];
             m_nextBV[0] = m_nextBV[3];
             m_nextBV[2] = m_nextBV[1];
             m_nextBV[1] = tmp;
           }
-          else if(tmp4 < tmp2)
+          else if (tmp4 < tmp2)
           {
             m_nextBV[0] = m_nextBV[2];
             m_nextBV[2] = m_nextBV[1];
@@ -522,9 +522,9 @@ bool STP_Torus::isHereFarthestNeighbour(const Vector3& v)
             m_nextBV[2] = m_nextBV[3];
           }
         }
-        else if(tmp4 < tmp3)
+        else if (tmp4 < tmp3)
         {
-          if(tmp4 < tmp2)
+          if (tmp4 < tmp2)
           {
             m_nextBV[0] = m_nextBV[3];
           }
@@ -545,7 +545,7 @@ bool STP_Torus::isHereFarthestNeighbour(const Vector3& v)
       else
       {
         //compare tmp2 and tmp3
-        if(tmp2 < tmp3)
+        if (tmp2 < tmp3)
         {
           m_nextBV[0] = m_nextBV[1];
           m_nextBV[1] = m_nextBV[2];
@@ -557,10 +557,10 @@ bool STP_Torus::isHereFarthestNeighbour(const Vector3& v)
         m_nextBV[2] = -1;
       }
     }
-    else if(m_nextBV[3] != -1)
+    else if (m_nextBV[3] != -1)
     {
       //compare tmp2 and tmp4
-      if(tmp2 < tmp4)
+      if (tmp2 < tmp4)
       {
         m_nextBV[0] = m_nextBV[1];
         m_nextBV[1] = m_nextBV[3];
@@ -578,12 +578,12 @@ bool STP_Torus::isHereFarthestNeighbour(const Vector3& v)
       m_nextBV[1] = -1;
     }
   }
-  else if(m_nextBV[2] != -1)
+  else if (m_nextBV[2] != -1)
   {
-    if(m_nextBV[3] != -1)
+    if (m_nextBV[3] != -1)
     {
       //compare tmp3 and tmp4
-      if(tmp3 < tmp4)
+      if (tmp3 < tmp4)
       {
         m_nextBV[0] = m_nextBV[2];
         m_nextBV[1] = m_nextBV[3];
@@ -602,7 +602,7 @@ bool STP_Torus::isHereFarthestNeighbour(const Vector3& v)
       m_nextBV[2] = -1;
     }
   }
-  else if(m_nextBV[3] != -1)
+  else if (m_nextBV[3] != -1)
   {
     //only tmp4
     m_nextBV[0] = m_nextBV[3];
@@ -684,23 +684,23 @@ bool STP_Torus::isHereFarthestNeighbourPrime(const Vector3& v)
 
 bool STP_Torus::isHereFirstNeighbour(const Vector3& v)
 {
-  if(m_VVR2.isInsidePrime(v)>0)//begin with big spheres
+  if (m_VVR2.isInsidePrime(v)>0)//begin with big spheres
   {
     m_nextBVPrime = m_VVR2.m_outerSTP;
     return false;
   }
-  if(m_VVR3.isInsidePrime(v)>0)
+  if (m_VVR3.isInsidePrime(v)>0)
   {
     m_nextBVPrime= m_VVR3.m_outerSTP;
     return false;
   }
 
-  if(m_VVR0.isInsidePrime(v)>0)//small spheres
+  if (m_VVR0.isInsidePrime(v)>0)//small spheres
   {
     m_nextBVPrime = m_VVR0.m_outerSTP;
     return false;
   }
-  if(m_VVR1.isInsidePrime(v)>0)
+  if (m_VVR1.isInsidePrime(v)>0)
   {
     m_nextBVPrime = m_VVR1.m_outerSTP;
     return false;
@@ -711,23 +711,23 @@ bool STP_Torus::isHereFirstNeighbour(const Vector3& v)
 
 bool STP_Torus::isHereFirstNeighbourPrime(const Vector3& v,int idp)
 {
-  if((m_VVR2.m_outerSTP!=idp)&&(m_VVR2.isInsidePlane(v)>0))//begin with big spheres limits
+  if ((m_VVR2.m_outerSTP!=idp)&&(m_VVR2.isInsidePlane(v)>0))//begin with big spheres limits
   {
     m_nextBVPrime = m_VVR2.m_outerSTP;
     return false;
   }
-  if((m_VVR3.m_outerSTP!=idp)&&(m_VVR3.isInsidePlane(v)>0))
+  if ((m_VVR3.m_outerSTP!=idp)&&(m_VVR3.isInsidePlane(v)>0))
   {
     m_nextBVPrime = m_VVR3.m_outerSTP;
     return false;
   }
 
-  if((m_VVR0.m_outerSTP!=idp)&&(m_VVR0.isInsidePrime(v)>0))//small spheres
+  if ((m_VVR0.m_outerSTP!=idp)&&(m_VVR0.isInsidePrime(v)>0))//small spheres
   {
     m_nextBVPrime = m_VVR0.m_outerSTP;
     return false;
   }
-  if((m_VVR1.m_outerSTP!=idp)&&(m_VVR1.isInsidePrime(v)>0))
+  if ((m_VVR1.m_outerSTP!=idp)&&(m_VVR1.isInsidePrime(v)>0))
   {
     m_nextBVPrime = m_VVR1.m_outerSTP;
     return false;
@@ -739,23 +739,23 @@ bool STP_Torus::isHereFirstNeighbourPrime(const Vector3& v,int idp)
 
 bool STP_Torus::isHereHybrid(const Vector3& v,int idp)
 {
-  if((m_VVR2.m_outerSTP!=idp)&&(m_VVR2.isInsidePlane(v)>0))//begin with big spheres limits
+  if ((m_VVR2.m_outerSTP!=idp)&&(m_VVR2.isInsidePlane(v)>0))//begin with big spheres limits
   {
     m_nextBVPrime = m_VVR2.m_outerSTP;
     return false;
   }
-  if((m_VVR3.m_outerSTP!=idp)&&(m_VVR3.isInsidePlane(v)>0))
+  if ((m_VVR3.m_outerSTP!=idp)&&(m_VVR3.isInsidePlane(v)>0))
   {
     m_nextBVPrime = m_VVR3.m_outerSTP;
     return false;
   }
 
-  if((m_VVR0.m_outerSTP!=idp)&&(m_VVR0.isInsidePrime(v)>0))//small spheres
+  if ((m_VVR0.m_outerSTP!=idp)&&(m_VVR0.isInsidePrime(v)>0))//small spheres
   {
     m_nextBVPrime = m_VVR0.m_outerSTP;
     return false;
   }
-  if((m_VVR1.m_outerSTP!=idp)&&(m_VVR1.isInsidePrime(v)>0))
+  if ((m_VVR1.m_outerSTP!=idp)&&(m_VVR1.isInsidePrime(v)>0))
   {
     m_nextBVPrime = m_VVR1.m_outerSTP;
     return false;
@@ -767,7 +767,7 @@ bool STP_Torus::isHereHybrid(const Vector3& v,int idp)
 
 int STP_Torus::getNextBV(unsigned int id) const
 {
-  if(id < 4)
+  if (id < 4)
     return m_nextBV[id];
   else
     return -1;

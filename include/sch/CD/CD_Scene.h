@@ -87,7 +87,7 @@ namespace sch
 }
 #endif
 
- /**
+/**
  * \example      example1.cpp
  * This example shows the normal use of the SCH library:
  * Scene managements

@@ -11,7 +11,7 @@
 namespace sch
 {
   class STP_BV_P :
-    public STP_BV
+      public STP_BV
   {
   public:
     SCH_API STP_BV_P(void);

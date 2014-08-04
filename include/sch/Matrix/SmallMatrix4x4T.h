@@ -41,13 +41,13 @@ namespace CD_Matrix
     /*! Constructor form a scalar */
     Matrix4x4T<T> (const T x)
     {
-      for(int i=0; i<16; m[i++]=x);
+      for (int i=0; i<16; m[i++]=x);
     }
 
     /*! Copy constructor */
     Matrix4x4T<T> (const struct Matrix4x4T<T> &v)
     {
-      for(int i=0; i<16; i++)
+      for (int i=0; i<16; i++)
         m[i] = v.m[i];
     }
 
@@ -55,7 +55,7 @@ namespace CD_Matrix
     template <typename T2>
     Matrix4x4T<T> (const struct Matrix4x4T<T2> &v)
     {
-      for(int i=0; i<16; i++)
+      for (int i=0; i<16; i++)
         m[i] = v.m[i];
     }
 
@@ -86,7 +86,7 @@ namespace CD_Matrix
     /*! Set to zero matrix */
     inline void setZero(void)
     {
-      for(int i=0; i<16; i++)
+      for (int i=0; i<16; i++)
         m[i] = 0.0;
     }
 
@@ -384,9 +384,9 @@ namespace CD_Matrix
 
     inline friend std::ostream& operator <<(std::ostream &os,Matrix4x4T<T> const &A)
     {
-      for(int i=0; i<4; i++)
+      for (int i=0; i<4; i++)
       {
-        for(int j=0; j<4; j++)
+        for (int j=0; j<4; j++)
           os << A.m[i*4+j] << " ";
         os << std::endl;
       }

@@ -56,7 +56,7 @@ namespace sch
   public:
     Depth_Edge() {}
     Depth_Edge(Depth_Triangle *triangle, int index)
-      : m_triangle(triangle),
+        : m_triangle(triangle),
         m_index(index)
     {}
 
@@ -94,7 +94,7 @@ namespace sch
   public:
     SCH_API Depth_Triangle() {}
     SCH_API Depth_Triangle(Index_t i0, Index_t i1, Index_t i2)
-      :	m_obsolete(false)
+        :	m_obsolete(false)
     {
       m_indices[0] = i0;
       m_indices[1] = i1;
@@ -176,7 +176,7 @@ namespace sch
     int      m_free;
   public:
     SCH_API Depth_TriangleStore()
-      : m_free(0)
+        : m_free(0)
     {}
 
     SCH_API void clear()

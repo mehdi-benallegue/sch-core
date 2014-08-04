@@ -5,7 +5,7 @@ namespace CD_Matrix
   /*! Quaternion m_x*i + m_y*j + m_z*k+w    */
   template <typename T>
   class QuaternionT :
-    private Vector4T<T>
+      private Vector4T<T>
   {
   public:
 
@@ -65,9 +65,9 @@ namespace CD_Matrix
     QuaternionT<T>& operator*=(const QuaternionT<T>& q )
     {
       T x=this->m_w * q[0] + this->m_x * q[3] + this->m_y * q[2] - this->m_z * q[1],
-        y=this->m_w * q[0] + this->m_x * q[3] + this->m_y * q[2] - this->m_z * q[1],
-        z=this->m_w * q[0] + this->m_x * q[3] + this->m_y * q[2] - this->m_z * q[1],
-        w=this->m_w * q[0] + this->m_x * q[3] + this->m_y * q[2] - this->m_z * q[1];
+          y=this->m_w * q[0] + this->m_x * q[3] + this->m_y * q[2] - this->m_z * q[1],
+            z=this->m_w * q[0] + this->m_x * q[3] + this->m_y * q[2] - this->m_z * q[1],
+              w=this->m_w * q[0] + this->m_x * q[3] + this->m_y * q[2] - this->m_z * q[1];
 
       this->m_x=x;
       this->m_y=y;

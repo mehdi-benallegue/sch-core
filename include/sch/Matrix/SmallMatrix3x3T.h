@@ -187,7 +187,7 @@ namespace CD_Matrix
     explicit Matrix3x3T<T> (const T &angle,const Vector3T<T,b>  &axis)
     {
       T sin_a = sin(angle / 2),
-        cos_a = cos(angle / 2);
+                cos_a = cos(angle / 2);
 
       T q0 = axis[0] * sin_a;
       T q1 = axis[1] * sin_a;
@@ -268,7 +268,7 @@ namespace CD_Matrix
     void Set(const T &angle,const Vector3T<T,b>  &axis)
     {
       T sin_a = sin(angle / 2),
-        cos_a = cos(angle / 2);
+                cos_a = cos(angle / 2);
 
       T q0 = axis[0] * sin_a;
       T q1 = axis[1] * sin_a;
@@ -324,11 +324,11 @@ namespace CD_Matrix
                  this->m[1]=xy - wz,
                             this->m[2]=xz + wy,
                                        this->m[3]=xy + wz,
-                                           this->m[4]=T(1.0) - (xx + zz),
-                                               this->m[5]=yz - wx,
-                                                   this->m[6]=xz - wy,
-                                                       this->m[7]=yz + wx,
-                                                           this->m[8]=T(1.0) - (xx + yy);
+                                                  this->m[4]=T(1.0) - (xx + zz),
+                                                             this->m[5]=yz - wx,
+                                                                        this->m[6]=xz - wy,
+                                                                                   this->m[7]=yz + wx,
+                                                                                              this->m[8]=T(1.0) - (xx + yy);
     }
 
     /*! quatrenion*/

@@ -6,16 +6,16 @@
 using namespace sch;
 
 Polyhedron_algorithms::Polyhedron_algorithms(void)
-  :fastVertexes_(0x0)
-  ,lastVertexes_(0x0)
+    :fastVertexes_(0x0)
+    ,lastVertexes_(0x0)
 {
 
 }
 
 Polyhedron_algorithms::Polyhedron_algorithms(const Polyhedron_algorithms &p)
-  :triangles_(p.triangles_)
-  ,fastVertexes_(0x0)
-  ,lastVertexes_(0x0)
+    :triangles_(p.triangles_)
+    ,fastVertexes_(0x0)
+    ,lastVertexes_(0x0)
 {
   for (unsigned i=0; i<p.vertexes_.size(); ++i)
   {

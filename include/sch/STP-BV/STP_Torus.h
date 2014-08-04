@@ -52,7 +52,7 @@ namespace sch
   */
 
   class STP_Torus :
-    public STP_Feature
+      public STP_Feature
   {
   public:
     SCH_API STP_Torus();

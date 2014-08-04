@@ -42,8 +42,8 @@ namespace sch
     std::vector<Vector3> normal;
 
     Geometry(GeometryType t): type(t), color(0,0,0)
-      , radius(0), center(0,0,0)
-      , rotation(1,0,0,  0,1,0,  0,0,1)
+        , radius(0), center(0,0,0)
+        , rotation(1,0,0,  0,1,0,  0,0,1)
     {}
   };
 
@@ -169,7 +169,7 @@ namespace sch
 
 
   class STP_BV :
-    public S_ObjectNormalized
+      public S_ObjectNormalized
   {
   public:
     SCH_API STP_BV(void);

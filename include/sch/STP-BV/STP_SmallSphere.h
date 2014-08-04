@@ -24,7 +24,7 @@
 namespace sch
 {
   class STP_SmallSphere :
-    public STP_Feature
+      public STP_Feature
   {
   public:
     SCH_API STP_SmallSphere();

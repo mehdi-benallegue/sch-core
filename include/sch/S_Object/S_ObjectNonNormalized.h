@@ -14,7 +14,7 @@ namespace sch
 {
 
   class S_ObjectNonNormalized :
-    public S_Object
+      public S_Object
   {
   public:
     SCH_API S_ObjectNonNormalized(void);

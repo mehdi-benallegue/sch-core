@@ -15,7 +15,7 @@ namespace sch
   {
     unsigned int a,b,c;
     Vector3 normal;
-  public:
+public:
     template<class Archive>
     void serialize(Archive & ar, const unsigned int /*version*/)
     {
@@ -28,7 +28,7 @@ namespace sch
 
   struct Polyhedron_algorithms
   {
-  public:
+public:
     SCH_API Polyhedron_algorithms(void);
     SCH_API Polyhedron_algorithms(const Polyhedron_algorithms&);
 

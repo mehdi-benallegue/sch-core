@@ -100,18 +100,18 @@ void computeRotation(sch::Matrix3x3& R, const sch::Vector3& v, const sch::Scalar
 using namespace sch;
 
 s_Triangle::s_Triangle(const Point3& vertex1, const Point3& vertex2, const Point3& vertex3):
-  m_vertex1(vertex1), m_vertex2(vertex2), m_vertex3(vertex3)
+    m_vertex1(vertex1), m_vertex2(vertex2), m_vertex3(vertex3)
 {
 }
 
 s_SphereApproxim::s_SphereApproxim(std::vector<Point3>& vertices, int step, const Point3& sphereCenter, Scalar sphereRadius):
-  m_vertices(vertices), m_step(step), m_sphereCenter(sphereCenter), m_sphereRadius(sphereRadius)
+    m_vertices(vertices), m_step(step), m_sphereCenter(sphereCenter), m_sphereRadius(sphereRadius)
 {
 }
 
 void s_SphereApproxim::operator ()(const Triangle& vertices, const int& currentStep) const
 {
-  if(currentStep < m_step/2)
+  if (currentStep < m_step/2)
   {
     Triangle t;
     t.m_vertex1 = vertices.m_vertex1;
@@ -160,26 +160,26 @@ void s_PointsComparator::setData(const Point3& axis, const std::vector<Point3>& 
 
 bool s_PointsComparator::operator ()(unsigned int id1, unsigned int id2) const
 {
-  if(id1 >= m_points.size() || id2 >= m_points.size())
+  if (id1 >= m_points.size() || id2 >= m_points.size())
     return false;
 
-  if((m_points[id1]^m_points[id2])*m_axis > Scalar(0))
+  if ((m_points[id1]^m_points[id2])*m_axis > Scalar(0))
     return true;
   return false;
 }
 
 STP_BV::STP_BV()
-  :m_fastPatches(NULL)
-  ,m_lastPatches(NULL)
-  ,geometries_()
+    :m_fastPatches(NULL)
+    ,m_lastPatches(NULL)
+    ,geometries_()
 {
 }
 
 
 STP_BV::STP_BV(const STP_BV & bv)
-  :m_fastPatches(NULL)
-  ,m_lastPatches(NULL)
-  ,geometries_(bv.geometries_)
+    :m_fastPatches(NULL)
+    ,m_lastPatches(NULL)
+    ,geometries_(bv.geometries_)
 {
   for (size_t i=0; i<bv.m_patches.size(); i++)
   {
@@ -271,7 +271,7 @@ void STP_BV::computeConePointsBetween(const Point3& p1, const Point3& p2,
 
   computeRotation(matrix2, axis, angle);
 
-  for(int i = 0 ; i < step - 1; ++i)
+  for (int i = 0 ; i < step - 1; ++i)
   {
     tmp1 = res[i];
     tmp2 = matrix2 * tmp1;
@@ -289,11 +289,11 @@ Point3 STP_BV::computeLinesCommonPoint(const Point3& l1p1, const Point3& l1p2,
   v2 = l2p1 - l2p2;
 
   Scalar t;
-  if( fabs(v2[0] * v1[1] - v1[0] * v2[1]) > 1e-8 )
+  if ( fabs(v2[0] * v1[1] - v1[0] * v2[1]) > 1e-8 )
   {
     t = (v2[0] * (l2p1[1] - l1p1[1]) + v2[1] * (l1p1[0] - l2p1[0])) / (v2[0] * v1[1] - v1[0] * v2[1]);
   }
-  else if( fabs(v2[1] * v1[2] - v2[2] * v1[1])>1e-8 )
+  else if ( fabs(v2[1] * v1[2] - v2[2] * v1[1])>1e-8 )
   {
     t = (v2[1] * (l2p1[2] - l1p1[2]) + v2[2] * (l1p1[1] - l2p1[1])) / (v2[1] * v1[2] - v2[2] * v1[1]);
   }
@@ -315,7 +315,7 @@ void STP_BV::loadFromBinary(const std::string & filename)
     boost::archive::binary_iarchive ia(ifs);
     ia >> *this;
   }
-  catch(...)
+  catch (...)
   {
     std::cerr << "Could not load the object from: " << filename << std::endl;
   }
@@ -324,7 +324,7 @@ void STP_BV::loadFromBinary(const std::string & filename)
 void STP_BV::saveToBinary(const std::string & filename)
 {
   std::ofstream ofs(filename.c_str(), std::ios::binary);
-  if(!ofs.is_open())
+  if (!ofs.is_open())
   {
     std::cerr << "Could not open file: " << filename << std::endl;
     return;
@@ -353,7 +353,7 @@ void STP_BV::constructFromFile(const std::string& filename)
   os2 << "DEBUT CREATION OBJET" << std::endl;
 #endif
   is.open(filename.c_str());
-  if(!is.is_open())
+  if (!is.is_open())
   {
     std::cerr << "STP_BV Exception: unable to open file '"<< filename << "'" << std::endl;
     throw std::exception();
@@ -362,12 +362,12 @@ void STP_BV::constructFromFile(const std::string& filename)
   //small spheres
   Scalar _r,_R;
   is >>_r>>_R>> ssnum;
-  if(ssnum <= 0)
+  if (ssnum <= 0)
   {
     std::cout << "EXCEPTION : the source file '"<< filename << "' doesn't contain any small spheres." << std::endl;
     throw std::exception();
   }
-  for(int i = 0 ; i < ssnum ; ++i)
+  for (int i = 0 ; i < ssnum ; ++i)
   {
     is >> sRadius >> center[0] >> center[1] >> center[2];
     STP_SmallSphere* ss = new STP_SmallSphere(sRadius, Point3(center[0], center[1], center[2]));
@@ -375,7 +375,7 @@ void STP_BV::constructFromFile(const std::string& filename)
 
     is >> ssvvrnum;
     ssvvr.resize(ssvvrnum);
-    for(int j = 0 ; j < ssvvrnum ; ++j)
+    for (int j = 0 ; j < ssvvrnum ; ++j)
     {
       is >> outerSTP >> cosangle >> axis[0] >> axis[1] >> axis[2];
       ssvvr[j].m_cosangle = cosangle;
@@ -397,12 +397,12 @@ void STP_BV::constructFromFile(const std::string& filename)
   //big spheres
   Vector3 normal;
   is >> bsnum;
-  if(bsnum <= 0)
+  if (bsnum <= 0)
   {
     std::cout << "EXCEPTION : the source file '"<< filename << "' doesn't contain any big spheres." << std::endl;
     throw std::exception();
   }
-  for(int i = 0 ; i < bsnum ; ++i)
+  for (int i = 0 ; i < bsnum ; ++i)
   {
     Triangle vertices;
 
@@ -426,7 +426,7 @@ void STP_BV::constructFromFile(const std::string& filename)
     Geometry geometryBigs(Geometry::TRIANGLE);
     geometryBigs.color = Point3(1, 0.9, 0.9);
     geometryBigs.center = bigs->getCenter();
-    for(std::vector<Point3>::const_iterator it = spherePoints.begin() ; it != spherePoints.end() ; ++it)
+    for (std::vector<Point3>::const_iterator it = spherePoints.begin() ; it != spherePoints.end() ; ++it)
     {
       normal = (*it) - bigs->getCenter();
       normal.normalize();
@@ -436,7 +436,7 @@ void STP_BV::constructFromFile(const std::string& filename)
     geometries_.push_back(geometryBigs);
 
     //get the VVR info
-    for(int j = 0 ; j < 3 ; ++j)
+    for (int j = 0 ; j < 3 ; ++j)
     {
       is >> outerSTP >> axis[0] >> axis[1] >> axis[2];
       dvvr[j].m_cosangle = 0.0;
@@ -461,21 +461,21 @@ void STP_BV::constructFromFile(const std::string& filename)
   std::vector<Point3> lastArc;
 
   is >> tnum;
-  if(tnum <= 0)
+  if (tnum <= 0)
   {
     std::cout << "EXCEPTION : the source file '"<< filename << "' doesn't contain any toruses." << std::endl;
     throw std::exception();
   }
 
-  for(int i = 0 ; i < tnum ; ++i)
+  for (int i = 0 ; i < tnum ; ++i)
   {
     is >> isRealTorus;
-    if(isRealTorus)
+    if (isRealTorus)
       ++torusCount;
     is >> cRadius >> sRadius;
     is >> center[0] >> center[1] >> center[2];
     is >> axis[0] >> axis[1] >> axis[2];
-    if(isRealTorus)
+    if (isRealTorus)
       t = new STP_Torus(Vector3(axis[0], axis[1], axis[2]), Point3(center[0], center[1], center[2]), Scalar(cRadius), Scalar(sRadius));
 
     is >> outerSTP >> cosangle >> axis[0] >> axis[1] >> axis[2];
@@ -496,16 +496,16 @@ void STP_BV::constructFromFile(const std::string& filename)
     dvvr[3].m_outerSTP = outerSTP;
 
     //torus-small sphere VVR (real cones)
-    if(isRealTorus)
+    if (isRealTorus)
       computedPoints.clear();
     p1 = patchesCenter[dvvr[0].m_outerSTP] - patchesCenter[dvvr[2].m_outerSTP];
     p1.normalize();
     p2 = patchesCenter[dvvr[0].m_outerSTP] - patchesCenter[dvvr[3].m_outerSTP];
     p2.normalize();
-    if(isRealTorus)
+    if (isRealTorus)
     {
       Matrix3x3 rotation;
-      if(  (p1^p2)*dvvr[0].m_axis < 0.0)
+      if (  (p1^p2)*dvvr[0].m_axis < 0.0)
         computeConePointsBetween(p2, p1, dvvr[0].m_axis, anglestep, computedPoints, rotation);
       else
         computeConePointsBetween(p1, p2, dvvr[0].m_axis, anglestep, computedPoints, rotation);
@@ -520,7 +520,7 @@ void STP_BV::constructFromFile(const std::string& filename)
       Geometry geometryTorus2(Geometry::TRIANGLE);
       geometryTorus2.rotation = rotation;
       geometryTorus2.color = Point3(0.74 + i * 0.04, 0.85, 0.95);
-      for(size_t j = 0 ; j < computedPoints.size() - 1 ; ++j)
+      for (size_t j = 0 ; j < computedPoints.size() - 1 ; ++j)
       {
         geometryTorus2.vertex.push_back(computedPoints[j]);
         geometryTorus2.vertex.push_back(Vector3(0.0, 0.0, 0.0));
@@ -530,16 +530,16 @@ void STP_BV::constructFromFile(const std::string& filename)
     }
 
     //torus-small sphere VVR (real cones)
-    if(isRealTorus)
+    if (isRealTorus)
       computedPoints.clear();
     p1 = patchesCenter[dvvr[1].m_outerSTP] - patchesCenter[dvvr[3].m_outerSTP];
     p1.normalize();
     p2 = patchesCenter[dvvr[1].m_outerSTP] - patchesCenter[dvvr[2].m_outerSTP];
     p2.normalize();
-    if(isRealTorus)
+    if (isRealTorus)
     {
       Matrix3x3 rotation;
-      if( ( p1^p2)*dvvr[1].m_axis < 0.0)
+      if ( ( p1^p2)*dvvr[1].m_axis < 0.0)
         computeConePointsBetween(p2, p1, dvvr[1].m_axis, anglestep, computedPoints, rotation);
       else
         computeConePointsBetween(p1, p2, dvvr[1].m_axis, anglestep, computedPoints, rotation);
@@ -554,7 +554,7 @@ void STP_BV::constructFromFile(const std::string& filename)
       Geometry geometryTorus2(Geometry::TRIANGLE);
       geometryTorus2.rotation = rotation;
       geometryTorus2.color = Point3(0.45 + i * 0.04, 0.84, 0.4);
-      for(size_t j = 0 ; j < computedPoints.size() - 1 ; ++j)
+      for (size_t j = 0 ; j < computedPoints.size() - 1 ; ++j)
       {
         normal=computedPoints[j]^computedPoints[j+1];
         normal.normalize();
@@ -568,19 +568,19 @@ void STP_BV::constructFromFile(const std::string& filename)
     }
 
     //torus-big sphere VVR (plane)
-    if(isRealTorus)
+    if (isRealTorus)
       computedPoints.clear();
     p1 = patchesCenter[dvvr[0].m_outerSTP] - patchesCenter[dvvr[2].m_outerSTP];
     p1.normalize();
     p2 = patchesCenter[dvvr[1].m_outerSTP] - patchesCenter[dvvr[2].m_outerSTP];
     p2.normalize();
-    if(isRealTorus)
+    if (isRealTorus)
     {
       computeArcPointsBetween(p2, p1, Point3(0.0, 0.0, 0.0), step, computedPoints);
       //create and register the displayList
       Geometry geometryTorus5(Geometry::TRIANGLE);
       geometryTorus5.color = Point3(1.0, 0.59, 0.0);
-      for(size_t j = 0 ; j < computedPoints.size() - 1 ; ++j)
+      for (size_t j = 0 ; j < computedPoints.size() - 1 ; ++j)
       {
         normal=computedPoints[j]^computedPoints[j+1];
         normal.normalize();
@@ -594,19 +594,19 @@ void STP_BV::constructFromFile(const std::string& filename)
     }
 
     //torus-big sphere VVR (plane)
-    if(isRealTorus)
+    if (isRealTorus)
       computedPoints.clear();
     p1 = patchesCenter[dvvr[0].m_outerSTP] - patchesCenter[dvvr[3].m_outerSTP];
     p1.normalize();
     p2 = patchesCenter[dvvr[1].m_outerSTP] - patchesCenter[dvvr[3].m_outerSTP];
     p2.normalize();
-    if(isRealTorus)
+    if (isRealTorus)
     {
       computeArcPointsBetween(p1,p2, Point3(0.0, 0.0, 0.0), step, computedPoints);
       //create and register the displayList
       Geometry geometryTorus6(Geometry::TRIANGLE);
       geometryTorus6.color = Point3(1.0, 1.0, 0.3);
-      for(size_t j = 0 ; j < computedPoints.size() - 1 ; ++j)
+      for (size_t j = 0 ; j < computedPoints.size() - 1 ; ++j)
       {
         normal=computedPoints[j]^computedPoints[j+1];
         normal.normalize();
@@ -618,7 +618,7 @@ void STP_BV::constructFromFile(const std::string& filename)
 //			geometries_.push_back(geometryTorus6);
     }
 
-    if(isRealTorus)
+    if (isRealTorus)
     {
       //get the data for the torus displayList
       p1 = patchesCenter[dvvr[0].m_outerSTP] - patchesCenter[dvvr[2].m_outerSTP];
@@ -645,7 +645,7 @@ void STP_BV::constructFromFile(const std::string& filename)
       computeArcPointsBetween(p4, p3, patchesCenter[dvvr[3].m_outerSTP], step, lastArc);
       r = sRadius - (patchesCenter[dvvr[0].m_outerSTP] - patchesCenter[dvvr[2].m_outerSTP]).norm();
       computeArcPointsBetween(p1, p4, patchesCenter[dvvr[0].m_outerSTP], step, computedPoints);
-      for(int j = 1 ; j < step ; ++j)
+      for (int j = 1 ; j < step ; ++j)
       {
         arcCenter = computeLinesCommonPoint(patchesCenter[dvvr[0].m_outerSTP],
                                             patchesCenter[dvvr[1].m_outerSTP],
@@ -660,9 +660,9 @@ void STP_BV::constructFromFile(const std::string& filename)
       //create the torus displayList
       Geometry geometryTorus7(Geometry::TRIANGLE);
       geometryTorus7.color = Point3(1, .5, .5);
-      for(int j = 0 ; j < step ; ++j)
+      for (int j = 0 ; j < step ; ++j)
       {
-        for(int k = 0 ; k < step ; ++k)
+        for (int k = 0 ; k < step ; ++k)
         {
           normal = computedPoints[j * (step + 1) + k] - computeLinesCommonPoint(patchesCenter[dvvr[0].m_outerSTP],
                    patchesCenter[dvvr[1].m_outerSTP],
@@ -775,14 +775,14 @@ void STP_BV::saveTreeInFile(const std::string& treefilename, ArchiveType type)
 {
   std::ofstream os(treefilename.c_str(), std::ios::binary);
 
-  if(!os.is_open())
+  if (!os.is_open())
   {
     std::cout << "EXCEPTION in loadTreeFromFile : could not open given file" << std::endl;
     throw std::exception();
   }
 
   std::cout << "START SAVING THE OBJECT TREE STRUCTURE" << std::endl;
-  if(type == BINARY_ARCHIVE)
+  if (type == BINARY_ARCHIVE)
   {
   }
   else //(type == TEXT_ARCHIVE)
@@ -801,13 +801,13 @@ void STP_BV::loadTreeFromFile(const std::string& treefilename, ArchiveType type)
 #ifdef writeos2
   os2 << "DEBUT LECTURE ARBRE" << std::endl;
 #endif
-  if(!is.is_open())
+  if (!is.is_open())
   {
     std::cout << "EXCEPTION in loadTreeFromFile : could not open given file" << std::endl;
     throw std::exception();
   }
 
-  if(type == BINARY_ARCHIVE)
+  if (type == BINARY_ARCHIVE)
   {
   }
   else //(type == TEXT_ARCHIVE)
@@ -827,7 +827,7 @@ void STP_BV::addPatch(STP_Feature* patch)
 Point3 STP_BV::computeCenter(const std::vector<Point3>& points)
 {
   Point3 res(Scalar(0), Scalar(0), Scalar(0));
-  for(std::vector<Point3>::const_iterator it = points.begin() ; it != points.end() ; ++it)
+  for (std::vector<Point3>::const_iterator it = points.begin() ; it != points.end() ; ++it)
   {
     res += *it;
   }
@@ -902,16 +902,16 @@ Point3 STP_BV::supportNaive(const Vector3& v) const
   bool found = false;
 
 
-  while( (currentBV != m_patches.end()) && !(found = (*currentBV)->isHere(v)) )
+  while ( (currentBV != m_patches.end()) && !(found = (*currentBV)->isHere(v)) )
   {
     ++currentBV;
   }
 
   //TODO : gerer le cas ou on n'a pas trouve la zone !!!
-  if(!found)
+  if (!found)
   {
     std::cout << "Probleme zuo naive !!!" << std::endl;
-    if(m_patches.begin() != m_patches.end())
+    if (m_patches.begin() != m_patches.end())
       return (*m_patches.begin())->support(v);
     else
       return Point3(0.0, 0.0, 0.0);
@@ -943,7 +943,7 @@ Point3 STP_BV::supportFarthestNeighbour(const Vector3& v,int& lastFeature) const
   size_t i = 0;
   bool found = false;
 
-  while( (i < m_patches.size()) && !(found = currentBV->isHereFarthestNeighbour(v)) )
+  while ( (i < m_patches.size()) && !(found = currentBV->isHereFarthestNeighbour(v)) )
   {
     lastFeature = currentBV->getNextBV(0);//go to the neighbour feature which common limit with the current is farthest from the vector
 
@@ -951,10 +951,10 @@ Point3 STP_BV::supportFarthestNeighbour(const Vector3& v,int& lastFeature) const
     ++i;
   }
 
-  if(!found)
+  if (!found)
   {
     std::cout << "Probleme zuo farthest !!!" << std::endl;
-    if(m_patches.begin() != m_patches.end())
+    if (m_patches.begin() != m_patches.end())
       return (*m_patches.begin())->support(v);
     else
       return Point3(0.0, 0.0, 0.0);
@@ -985,7 +985,7 @@ Point3 STP_BV::supportFarthestNeighbourPrime(const Vector3& v,int& lastFeature) 
 
   size_t i = 0;
 
-  while( (i < m_patches.size()) && !(found = currentBV->isHereFarthestNeighbourPrime(v)) )
+  while ( (i < m_patches.size()) && !(found = currentBV->isHereFarthestNeighbourPrime(v)) )
   {
     lastFeature = currentBV->getNextBVPrime();//go to the neighbour feature which common limit with the current is farthest from the vector
 
@@ -993,7 +993,7 @@ Point3 STP_BV::supportFarthestNeighbourPrime(const Vector3& v,int& lastFeature) 
     ++i;
   }
 
-  if(!found)
+  if (!found)
   {
 #ifdef SUPPORT_DEBUG
     std::cout << "Probleme zuo farthest !!!" << std::endl;
@@ -1029,7 +1029,7 @@ Point3 STP_BV::supportFirstNeighbour(const Vector3& v,int& lastFeature) const
   /////A.E. : it seems me wrong to begin with 1
   size_t i = 0;
 
-  while( (i < m_patches.size()) && !(found = currentBV->isHereFirstNeighbour(v)) )
+  while ( (i < m_patches.size()) && !(found = currentBV->isHereFirstNeighbour(v)) )
   {
 
     lastFeature = currentBV->getNextBVPrime();//go to the neighbour feature which common limit with the current is farthest from the vector
@@ -1038,10 +1038,10 @@ Point3 STP_BV::supportFirstNeighbour(const Vector3& v,int& lastFeature) const
     ++i;
   }
 
-  if(!found)
+  if (!found)
   {
     std::cout << "Probleme zuo first !!!" << std::endl;
-    if(m_patches.begin() != m_patches.end())
+    if (m_patches.begin() != m_patches.end())
       return (*m_patches.begin())->support(v);
     else
       return Point3(0.0, 0.0, 0.0);
@@ -1073,7 +1073,7 @@ Point3 STP_BV::supportFirstNeighbourPrime(const Vector3& v,int& lastFeature) con
   int i = 0;
   int idp=-1; //previous id (used to remember from witch vvr we arrived in the current
 
-  while( (i < m_patchesSize) && !(found = currentBV->isHereFirstNeighbourPrime(v,idp)) )
+  while ( (i < m_patchesSize) && !(found = currentBV->isHereFirstNeighbourPrime(v,idp)) )
   {
     idp=lastFeature;
     lastFeature = currentBV->getNextBVPrime();//go to the neighbour
@@ -1086,7 +1086,7 @@ Point3 STP_BV::supportFirstNeighbourPrime(const Vector3& v,int& lastFeature) con
   std::cout<<i<<' ';
 #endif
 
-  if(!found)
+  if (!found)
   {
 #ifdef SUPPORT_DEBUG
     std::cout << "Probleme zuo first prime !!!" << std::endl;
@@ -1119,7 +1119,7 @@ Point3 STP_BV::supportHybrid(const Vector3& v,int& lastFeature) const
   int i = 0;
   int idp=-1; //previous id (used to remember from witch vvr we arrived in the current
 
-  while( (i < m_patchesSize) && !(found = currentBV->isHereHybrid(v,idp)) )
+  while ( (i < m_patchesSize) && !(found = currentBV->isHereHybrid(v,idp)) )
   {
     idp=lastFeature;
     lastFeature = currentBV->getNextBVPrime();//go to the neighbour
@@ -1132,7 +1132,7 @@ Point3 STP_BV::supportHybrid(const Vector3& v,int& lastFeature) const
   std::cout<<i<<' ';
 #endif
 
-  if(!found)
+  if (!found)
   {
 #ifdef SUPPORT_DEBUG
     std::cout << "Probleme zuo hybrid !!!" << std::endl;

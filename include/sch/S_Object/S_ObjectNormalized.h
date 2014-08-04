@@ -13,7 +13,7 @@
 namespace sch
 {
   class S_ObjectNormalized :
-    public S_Object
+      public S_Object
   {
   public:
     SCH_API S_ObjectNormalized(void);

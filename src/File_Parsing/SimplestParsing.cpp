@@ -21,7 +21,7 @@ void SimplestParsing::load(const char* filename)
 {
   std::ifstream tmp_is(filename);
 
-  if(!tmp_is.is_open())
+  if (!tmp_is.is_open())
   {
     std::stringstream errmsg;
     errmsg << "EXCEPTION : Unable to open File " << filename << std::endl;
@@ -40,7 +40,7 @@ void SimplestParsing::load(const char* filename)
     tmp_is.read(buf, BUF_SIZE);
     strbuf += std::string(buf, tmp_is.gcount());
   }
-  while(!tmp_is.eof());
+  while (!tmp_is.eof());
 
   stream_.str(strbuf);
 }

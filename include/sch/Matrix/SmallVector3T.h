@@ -19,10 +19,10 @@ namespace CD_Matrix
   template <typename T, bool normOptimization>
   struct Norm
   {
-  protected:
+protected:
     T norm_;
     bool normOutdated_;
-  public:
+public:
     Norm():normOutdated_(true)
     {
     }
@@ -53,7 +53,7 @@ namespace CD_Matrix
   template <typename T>
   struct Norm<T,false>
   {
-  public:
+public:
     inline void setNorm(const T& n)
     {
     }
@@ -81,13 +81,13 @@ namespace CD_Matrix
   template <typename T, bool normOptimization>
   struct Vector3T: protected Norm<T,normOptimization>
   {
-  public:
+public:
 
     T m_x,m_y,m_z;
 
     typedef Vector3T< T, normOptimization> Vector;
 
-  public:
+public:
 
     template<class Archive>
     void serialize(Archive & ar, const unsigned int /*version*/)
@@ -132,7 +132,7 @@ namespace CD_Matrix
     /*! copy constructor */
     template <bool b>
     inline Vector3T (const struct Vector3T<T,b> &v):
-      m_x( v.m_x),m_y( v.m_y),m_z( v.m_z)
+        m_x( v.m_x),m_y( v.m_y),m_z( v.m_z)
     {
 
     }

@@ -14,7 +14,7 @@
 namespace sch
 {
   class STP_BigSphere :
-    public STP_Feature
+      public STP_Feature
   {
 
   public:

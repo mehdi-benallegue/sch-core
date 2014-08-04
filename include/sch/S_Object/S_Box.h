@@ -9,7 +9,7 @@
 namespace sch
 {
   class S_Box :
-    public S_ObjectNonNormalized
+      public S_ObjectNonNormalized
   {
   public:
     /*!

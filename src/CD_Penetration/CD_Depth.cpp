@@ -24,7 +24,7 @@ public:
 struct TriangleHeap
 {
   TriangleHeap()
-    : num_triangles(0)
+      : num_triangles(0)
   {}
 
   Depth_Triangle* first() const

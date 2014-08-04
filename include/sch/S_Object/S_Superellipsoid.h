@@ -10,7 +10,7 @@ namespace sch
 {
 
   class S_Superellipsoid :
-    public S_ObjectNonNormalized
+      public S_ObjectNonNormalized
   {
   public:
     SCH_API S_Superellipsoid(Scalar a,Scalar b,Scalar c,Scalar epsilon1,Scalar epsilon2);

@@ -8,7 +8,7 @@
 namespace sch
 {
   class CD_SimplexEnhanced :
-    public CD_Simplex
+      public CD_Simplex
   {
   public:
     SCH_API CD_SimplexEnhanced(const Point3& p);

@@ -9,7 +9,7 @@ namespace sch
 {
 
   class S_Sphere :
-    public S_ObjectNormalized
+      public S_ObjectNormalized
   {
   public:
     /*!

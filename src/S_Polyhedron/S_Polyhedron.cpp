@@ -79,7 +79,7 @@ void S_Polyhedron::loadFromBinary(const std::string & filename)
     boost::archive::binary_iarchive ia(ifs);
     ia >> *this;
   }
-  catch(...)
+  catch (...)
   {
     std::cerr << "Could not load S_Polyhedron from binary file: " << std::endl;
   }
@@ -88,7 +88,7 @@ void S_Polyhedron::loadFromBinary(const std::string & filename)
 void S_Polyhedron::saveToBinary(const std::string & filename)
 {
   std::ofstream ofs(filename.c_str(), std::ios::binary);
-  if(!ofs.is_open())
+  if (!ofs.is_open())
   {
     std::cerr << "Could not open file: " << filename << std::endl;
     return;

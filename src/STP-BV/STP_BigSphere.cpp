@@ -8,12 +8,12 @@ STP_BigSphere::STP_BigSphere()
 }
 
 STP_BigSphere::STP_BigSphere(Scalar radius, Point3 center):
-  m_radius(radius), m_center(center)
+    m_radius(radius), m_center(center)
 {
 }
 
 STP_BigSphere::STP_BigSphere(const STP_BigSphere& s):
-  STP_Feature(s), m_radius(s.m_radius), m_center(s.m_center)
+    STP_Feature(s), m_radius(s.m_radius), m_center(s.m_center)
 {
   m_VVR0 = s.m_VVR0;
   m_VVR1 = s.m_VVR1;
@@ -31,7 +31,7 @@ const Point3& STP_BigSphere::getCenter() const
 
 void STP_BigSphere::setVVR(const STP_VVR* vvr)
 {
-  if(!vvr)
+  if (!vvr)
     return;
 
   m_VVR0 = vvr[0];
@@ -48,11 +48,11 @@ void STP_BigSphere::print() const
 
 bool STP_BigSphere::isHere(const Vector3& v) const
 {
-  if(m_VVR0.isInside(v))
+  if (m_VVR0.isInside(v))
   {
-    if(m_VVR1.isInside(v))
+    if (m_VVR1.isInside(v))
     {
-      if(m_VVR2.isInside(v))
+      if (m_VVR2.isInside(v))
         return true;
       else
         return false;
@@ -75,41 +75,41 @@ bool STP_BigSphere::isHereFarthestNeighbour(const Vector3& v)
 
   m_nextBV[0] = m_nextBV[1] = m_nextBV[2] = -1;
 
-  if(!(m_VVR0.isInside(v)))
+  if (!(m_VVR0.isInside(v)))
   {
     res = false;
     tmp1 = m_VVR0.getDistance(v);
     m_nextBV[0] = m_VVR0.m_outerSTP;
   }
-  if(!(m_VVR1.isInside(v)))
+  if (!(m_VVR1.isInside(v)))
   {
     res = false;
     tmp2 = m_VVR1.getDistance(v);
     m_nextBV[1] = m_VVR1.m_outerSTP;
   }
-  if(!(m_VVR2.isInside(v)))
+  if (!(m_VVR2.isInside(v)))
   {
     res = false;
     tmp3 = m_VVR2.getDistance(v);
     m_nextBV[2] = m_VVR2.m_outerSTP;
   }
 
-  if(m_nextBV[0] != -1)
+  if (m_nextBV[0] != -1)
   {
-    if(m_nextBV[1] != -1)
+    if (m_nextBV[1] != -1)
     {
-      if(m_nextBV[2] != -1)
+      if (m_nextBV[2] != -1)
       {
         //compare all three values
-        if(tmp2 < tmp1)
+        if (tmp2 < tmp1)
         {
           int tmp = m_nextBV[0];
-          if(tmp3 < tmp2)
+          if (tmp3 < tmp2)
           {
             m_nextBV[0] = m_nextBV[2];
             m_nextBV[2] = tmp;
           }
-          else if(tmp3 < tmp1)
+          else if (tmp3 < tmp1)
           {
             m_nextBV[0] = m_nextBV[1];
             m_nextBV[1] = m_nextBV[2];
@@ -121,9 +121,9 @@ bool STP_BigSphere::isHereFarthestNeighbour(const Vector3& v)
             m_nextBV[1] = tmp;
           }
         }
-        else if(tmp3 < tmp2)
+        else if (tmp3 < tmp2)
         {
-          if(tmp3 < tmp1)
+          if (tmp3 < tmp1)
           {
             int tmp = m_nextBV[0];
             m_nextBV[0] = m_nextBV[2];
@@ -141,7 +141,7 @@ bool STP_BigSphere::isHereFarthestNeighbour(const Vector3& v)
       else
       {
         //compare tmp1 to tmp2
-        if(tmp1 > tmp2)
+        if (tmp1 > tmp2)
         {
           int tmp = m_nextBV[0];
           m_nextBV[0] = m_nextBV[1];
@@ -149,10 +149,10 @@ bool STP_BigSphere::isHereFarthestNeighbour(const Vector3& v)
         }
       }
     }
-    else if(m_nextBV[2] != -1)
+    else if (m_nextBV[2] != -1)
     {
       //compare tmp1 to tmp3
-      if(tmp1 <= tmp3)
+      if (tmp1 <= tmp3)
       {
         m_nextBV[1] = m_nextBV[2];
         m_nextBV[2] = -1;
@@ -165,12 +165,12 @@ bool STP_BigSphere::isHereFarthestNeighbour(const Vector3& v)
       }
     }
   }
-  else if(m_nextBV[1] != -1)
+  else if (m_nextBV[1] != -1)
   {
-    if(m_nextBV[2] != -1)
+    if (m_nextBV[2] != -1)
     {
       //compare tmp2 to tmp3
-      if(tmp2 < tmp3)
+      if (tmp2 < tmp3)
       {
         m_nextBV[0] = m_nextBV[1];
         m_nextBV[1] = m_nextBV[2];
@@ -188,7 +188,7 @@ bool STP_BigSphere::isHereFarthestNeighbour(const Vector3& v)
       m_nextBV[1] = m_nextBV[2] = -1;
     }
   }
-  else if(m_nextBV[2] != -1)
+  else if (m_nextBV[2] != -1)
   {
     m_nextBV[0] = m_nextBV[2];
     m_nextBV[1] = m_nextBV[2] = -1;
@@ -248,19 +248,19 @@ bool STP_BigSphere::isHereFirstNeighbour(const Vector3& v)
 //	std::cout << "test is here big sphere" << std::endl;
 
 
-  if(m_VVR0.isInsidePrime(v)<0)
+  if (m_VVR0.isInsidePrime(v)<0)
   {
     m_nextBVPrime = m_VVR0.m_outerSTP;
     return false;
 
   }
-  if(m_VVR1.isInsidePrime(v)<0)
+  if (m_VVR1.isInsidePrime(v)<0)
   {
     m_nextBVPrime = m_VVR1.m_outerSTP;
     return false;
 
   }
-  if(m_VVR2.isInsidePrime(v)<0)
+  if (m_VVR2.isInsidePrime(v)<0)
   {
     m_nextBVPrime = m_VVR2.m_outerSTP;
     return false;
@@ -274,19 +274,19 @@ bool STP_BigSphere::isHereFirstNeighbour(const Vector3& v)
 bool STP_BigSphere::isHereFirstNeighbourPrime(const Vector3& v,int idp)
 {
 //	std::cout << "test is here big sphere" << std::endl;
-  if((m_VVR0.m_outerSTP!=idp)&&(m_VVR0.isInsidePlane(v)<0))
+  if ((m_VVR0.m_outerSTP!=idp)&&(m_VVR0.isInsidePlane(v)<0))
   {
     m_nextBVPrime = m_VVR0.m_outerSTP;
     return false;
 
   }
-  if((m_VVR1.m_outerSTP!=idp)&&(m_VVR1.isInsidePlane(v)<0))
+  if ((m_VVR1.m_outerSTP!=idp)&&(m_VVR1.isInsidePlane(v)<0))
   {
     m_nextBVPrime = m_VVR1.m_outerSTP;
     return false;
 
   }
-  if((m_VVR2.m_outerSTP!=idp)&&(m_VVR2.isInsidePlane(v)<0))
+  if ((m_VVR2.m_outerSTP!=idp)&&(m_VVR2.isInsidePlane(v)<0))
   {
     m_nextBVPrime = m_VVR2.m_outerSTP;
     return false;
@@ -299,17 +299,17 @@ bool STP_BigSphere::isHereHybrid(const Vector3& v,int idp)
 {
 //	std::cout << "test is here big sphere" << std::endl;
 
-  if((m_VVR0.m_outerSTP!=idp)&&(m_VVR0.isInsidePlane(v)<0))
+  if ((m_VVR0.m_outerSTP!=idp)&&(m_VVR0.isInsidePlane(v)<0))
   {
     m_nextBVPrime = m_VVR0.m_outerSTP;
     return false;
   }
-  if((m_VVR1.m_outerSTP!=idp)&&(m_VVR1.isInsidePlane(v)<0))
+  if ((m_VVR1.m_outerSTP!=idp)&&(m_VVR1.isInsidePlane(v)<0))
   {
     m_nextBVPrime = m_VVR1.m_outerSTP;
     return false;
   }
-  if((m_VVR2.m_outerSTP!=idp)&&(m_VVR2.isInsidePlane(v)<0))
+  if ((m_VVR2.m_outerSTP!=idp)&&(m_VVR2.isInsidePlane(v)<0))
   {
     m_nextBVPrime = m_VVR2.m_outerSTP;
     return false;
@@ -320,7 +320,7 @@ bool STP_BigSphere::isHereHybrid(const Vector3& v,int idp)
 
 int STP_BigSphere::getNextBV(unsigned int id) const
 {
-  if(id < 3)
+  if (id < 3)
     return m_nextBV[id];
   else
     return -1;
